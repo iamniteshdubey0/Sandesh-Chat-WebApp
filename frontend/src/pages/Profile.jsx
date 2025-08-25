@@ -1,32 +1,11 @@
 import { useState } from "react";
 import Input from "../components/Input";
 import { useAuthStore } from "../store/useAuthStore";
-import { Mail, User, Lock } from "lucide-react";
-
-// Reusable Edit Button
-const EditButton = ({ onClick }) => (
-  <button
-    onClick={onClick}
-    className="text-blue-600 text-sm font-medium hover:underline ml-4"
-    type="button"
-  >
-    Edit
-  </button>
-);
-
-// Reusable Inline Link Button
-const LinkButton = ({ href, children }) => (
-  <a
-    href={href}
-    className="text-blue-600 text-sm font-medium hover:underline ml-2"
-    tabIndex={0}
-  >
-    {children}
-  </a>
-);
+import { Mail, User, Lock, Camera } from "lucide-react";
 
 const Profile = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const [selectImage, setSelectedImage] = useState(null);
 
   const [coverImg] = useState(
     "https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=800&q=80"
@@ -35,7 +14,21 @@ const Profile = () => {
     "https://api.dicebear.com/6.x/adventurer/svg?seed=Rachel"
   );
 
-  const handleImageUpload =  async (e) => {}
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      setSelectedImage(base64Image);
+      await updateProfile({ profilePic: base64Image });
+    };
+  };
 
   return (
     <div className="min-h-screen bg-bg-dark py-4 px-2 sm:px-4">
@@ -47,24 +40,32 @@ const Profile = () => {
             alt="Cover"
             className="w-full h-30 sm:h-40 object-cover"
           />
-          <button className="absolute top-4 right-4 bg-border hover:border/70 text-text text-xs px-3 py-1 rounded shadow-lg font-medium focus:outline-none">
-            Upload Cover
-          </button>
         </div>
 
         {/* Profile Card */}
         <div className="relative flex flex-col sm:flex-row items-center sm:items-end gap-6 px-6 -mt-16">
           <div className="flex flex-col items-center">
             <img
-              src={ authUser.profilePic || avatarImg}
+              src={selectImage || authUser.profilePic || avatarImg}
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-border shadow-md object-cover"
             />
-            <div className="flex gap-3 mt-1">
-              <button className="text-sm text-primary/70 font-medium p-1 rounded-md hover:text-primary focus:outline-none">
-                Change
-              </button>
-            </div>
+            <label
+              htmlFor="profile-upload"
+              className={`transform-view translate-x-12 -translate-y-8 bg-bg-light hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-300 ${
+                isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
+              }`}
+            >
+              <Camera className="w-5 h-5 text-text"></Camera>
+              <input
+                type="file"
+                id="profile-upload"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={isUpdatingProfile}
+              />
+            </label>
           </div>
           <div className="flex-1 flex flex-col items-center sm:items-start pb-3 pt-2">
             <h1 className="text-2xl md:text-3xl font-bold text-text/90">
@@ -140,13 +141,13 @@ const Profile = () => {
             <div className="flex justify-between space-y-2 px-2 my-2">
               <dt className="font-medium text-text/60">Member Since</dt>
               <dd className="flex items-center">
-                <span className="text-text/70">{authUser.createdAt}</span>
+                <span className="text-text/70">{authUser.createdAt?.split("T")[0]}</span>
               </dd>
             </div>
             <div className="flex justify-between space-y-2 px-2 my-2">
               <dt className="font-medium text-text/60">Account Status</dt>
               <dd className="flex items-center">
-                <span className="text-text/70">Active</span>
+                <span className="text-success">Active</span>
               </dd>
             </div>
           </dl>
