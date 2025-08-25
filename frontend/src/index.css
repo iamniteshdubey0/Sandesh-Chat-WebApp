@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: hsl(var(--bg-dark));
+  --color-bg: hsl(var(--bg));
+  --color-bg-light: hsl(var(--bg-light));
+  --color-text: hsl(var(--text));
+  --color-text-muted: hsl(var(--text-muted));
+  --color-highlight: hsl(var(--highlight));
+  --color-border: hsl(var(--border));
+  --color-border-muted: hsl(var(--border-muted));
+  --color-primary: hsl(var(--primary));
+  --color-secondary: hsl(var(--secondary));
+  --color-danger: hsl(var(--danger));
+  --color-warning: hsl(var(--warning));
+  --color-success: hsl(var(--success));
+  --color-info: hsl(var(--info));
+}
+
+@layer base {
+  :root {
+    /* hsl (fallback color) */
+    --bg-dark: 256 100% 5%;
+    --bg: 259 96% 8%;
+    --bg-light: 258 67% 13%;
+    --text: 249 100% 100%;
+    --text-muted: 249 65% 79%;
+    --highlight: 255 42% 51%;
+    --border: 258 53% 38%;
+    --border-muted: 264 88% 24%;
+    --primary: 252 100% 84%;
+    --secondary: 61 72% 42%;
+    --danger: 8 84% 66%;
+    --warning: 54 100% 27%;
+    --success: 160 100% 35%;
+    --info: 217 100% 69%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    /* subtle thumb, change to match your theme if needed */
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-bg-dark text-text transition-colors duration-300 font-sans antialiased;
+  }
+
+  /* Mini Tablet (optional, e.g., 480px and up) */
+  @media (min-width: 480px) {
+    body {
+      /* Styles for mini tablets */
+      font-size: 1.05rem;
+    }
+  }
+
+  /* Tablet (sm: 640px and up) */
+  @media (min-width: 640px) {
+    body {
+      /* Styles for normal tablets and above */
+      font-size: 1.075rem;
+    }
+  }
+
+  /* md: 768px and up (larger tablets) */
+  @media (min-width: 768px) {
+    body {
+      /* Styles for larger tablets and up */
+      font-size: 1.1rem;
+    }
+  }
+
+  /* lg: 1024px and up (desktop) */
+  @media (min-width: 1024px) {
+    body {
+      /* Styles for desktops */
+      font-size: 1.15rem;
+    }
+  }
+
+  /* xl: 1280px and up (large desktop) */
+  @media (min-width: 1280px) {
+    body {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* 2xl: 1536px and up (extra large) */
+  @media (min-width: 1536px) {
+    body {
+      font-size: 1.25rem;
+    }
+  }
+}
