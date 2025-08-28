@@ -49,7 +49,7 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="bg-bg-light rounded-md mx-1 p-2 my-1 w-full transition-all duration-300">
+    <div className="bg-bg-light rounded-md mx-auto p-2 my-1 w-full transition-all duration-300">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2 transition-all duration-300  p-2">
           <div className="relative">
@@ -88,7 +88,7 @@ const MessageInput = () => {
           />
           <button
             type="button"
-            className={`hidden sm:flex cursor-pointer hover:scale-105 transition-all duration-200 ${
+            className={`flex cursor-pointer hover:scale-105 transition-all duration-200 ${
               imagePreview ? "text-success" : "text-text/50"
             }`}
             onClick={() => fileInputRef.current?.click()}

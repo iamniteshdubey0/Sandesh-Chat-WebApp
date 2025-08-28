@@ -25,7 +25,7 @@ const Home = () => {
     <div className="bg-bg-dark">
       {/* Desktop View */}
       <div className="max-sm:hidden pt-18 px-4 w-full">
-        <div className="grid md:grid-cols-4 space-x-2 ">
+        <div className="grid md:grid-cols-4 space-x-2">
           <div className="flex col-span-1">
             <ChatSidebar></ChatSidebar>
           </div>
@@ -50,7 +50,7 @@ const Home = () => {
           )}
 
           {showSettings && (
-            <div className="col-span-1 p-2 transition-all duration-500 ease-in-out transform opacity-100 translate-x-0">
+            <div className="col-span-1 transition-all duration-500 ease-in-out transform opacity-100 translate-x-0">
               <ChatSettings />
             </div>
           )}
@@ -58,7 +58,7 @@ const Home = () => {
       </div>
 
       {/* Mobile View */}
-      <div className="md:hidden container w-full pt-18 px-4">
+      <div className="md:hidden container w-full pt-18 px-1">
         <div className="w-full">
           {/* Show ChatSidebar when showChatWindow is false */}
           {!showChatWindow && (

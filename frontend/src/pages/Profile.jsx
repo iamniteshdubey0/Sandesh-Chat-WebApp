@@ -31,7 +31,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-dark py-4 px-2 sm:px-4">
+    <div className="min-h-screen bg-bg-dark py-4 px-2">
       <div className="max-w-5xl mx-auto rounded-xl bg-bg shadow border-1 border-border overflow-hidden mt-16">
         {/* Cover Image/Header */}
         <div className="relative">
@@ -78,9 +78,9 @@ const Profile = () => {
         </div>
 
         {/* Profile Info Table */}
-        <div className="p-6 pt-2">
+        <div className="md:p-6 pt-2 p-2">
           {/* Email */}
-          <div className="py-4 grid lg:grid-cols-2 space-x-2">
+          <div className="py-4 grid lg:grid-cols-2 space-x-2 space-y-4">
             <div className="flex flex-col space-y-2 px-2">
               <label
                 className="px-1 flex items-center gap-2 text-text-muted text-sm"
@@ -133,7 +133,7 @@ const Profile = () => {
         </div>
 
         {/* Account Information Table */}
-        <div className="p-6 pt-2">
+        <div className="md:p-6 pt-2 p-2">
           <h3 className="text-md text-text/50 font-semibold px-2 mb-6">
             Account Information
           </h3>
