@@ -6,6 +6,7 @@ const MessageSkeleton = () => {
     <div className="flex-1 px-3 py-4 overflow-y-auto bg-bg-dark space-y-3">
       {skeletonMessages.map((_, idx) => (
         <div
+        key={idx}
           className={`flex ${
             idx % 2 === 0 ? "justify-end" : "justify-start"
           } w-full gap-2`}

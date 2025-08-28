@@ -22,7 +22,7 @@ const ChatHeader = ({onBackToSidebar, onToggleSettings}) => {
         )}
         <div className="flex items-center">
           <img
-            src={selectedUser.profilePic}
+            src={selectedUser.profilePic || "/vite.svg"}
             alt={selectedUser.fullName}
             className="w-8 h-8 rounded-full object-cover mr-3 border"
           />

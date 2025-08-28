@@ -1,48 +1,93 @@
 import { Paperclip } from "lucide-react";
+import { useChatStore } from "../../store/useChatStore";
+import { useEffect } from "react";
+import { useAuthStore } from "../../store/useAuthStore";
+import MessageSkeleton from "../skeletons/MessageSkeleton";
+import { formatMessageTime } from "../../lib/util";
 
-const MessageContainer = ({ msg }) => {
+const MessageContainer = () => {
+  const { messages, getMessages, isMessagesLoading, selectedUser } =
+    useChatStore();
+
+  const { authUser } = useAuthStore();
+
+  useEffect(() => {
+    if (!selectedUser || !selectedUser._id) return;
+    getMessages(selectedUser._id);
+  }, [selectedUser._id, getMessages]);
+
+  // Show loading skeleton if messages are loading
+  if (isMessagesLoading) {
+    return <MessageSkeleton />;
+  }
+
+  // Show empty state if no selected user
+  if (!selectedUser) {
+    return (
+      <div className="flex-1 px-3 py-4 overflow-y-auto bg-bg-dark flex items-center justify-center">
+        <p className="text-text-muted">Select a chat to start messaging</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 px-3 py-4 overflow-y-auto bg-bg-dark space-y-3">
-      <div
-        className={`flex ${msg.me ? "justify-end" : "justify-start"} w-full`}
-      >
-        {!msg.me && msg.avatar && (
-          <img
-            src={msg.avatar}
-            alt={msg.sender}
-            className="w-6 h-6 rounded-full border mr-2 mt-auto"
-          />
-        )}
-        <div
-          className={`max-w-[75%] flex flex-col ${
-            msg.me ? "items-end" : "items-start"
-          }`}
-        >
+      {messages &&
+        messages.map((message) => (
           <div
-            className={`
-              px-3 py-2 
-              rounded-2xl 
-              mb-0.5
-              text-sm
-              ${
-                msg.me
-                  ? "bg-text-muted/40 text-text rounded-br-xs"
-                  : "bg-highlight text-text rounded-bl-xs"
+            key={message._id}
+            className={`flex ${
+              message.senderId === authUser?._id
+                ? "justify-end"
+                : "justify-start"
+            } w-full`}
+          >
+            <img
+              src={
+                message.senderId === authUser?._id
+                  ? authUser?.profilePic || "/vite.svg"
+                  : selectedUser?.profilePic || "/vite.svg"
               }
-            `}
-            style={{ wordBreak: "break-word" }}
-          >
-            {msg.content}
+              alt="profile pic"
+              className="w-6 h-6 rounded-full border mr-2 mt-auto"
+            />
+            <div
+              className={`max-w-[75%] flex flex-col ${
+                message.senderId === authUser?._id ? "items-end" : "items-start"
+              }`}
+            >
+              <div
+                className={`px-3 py-2 rounded-2xl mb-0.5 text-sm
+            ${
+              message.senderId === authUser?._id
+                ? "bg-text-muted/40 text-text rounded-bl-xs"
+                : "bg-highlight text-text rounded-bl-xs"
+            }
+          `}
+                style={{ wordBreak: "break-word" }}
+              >
+                {message.image && (
+                  <img
+                    src={message.image}
+                    alt="attachment"
+                    className="sm:max-w-[200px] sm:max-h-[250px] rounded-md mb-2 "
+                  />
+                )}
+
+                {message.text}
+              </div>
+              <span
+                className={`text-xs mt-0.5 ${
+                  message.senderId === authUser?._id
+                    ? "text-highlight"
+                    : "text-text-muted"
+                }`}
+              >
+                {formatMessageTime(message.createdAt)}
+              </span>
+            </div>
           </div>
-          <span
-            className={`text-xs mt-0.5 ${
-              msg.me ? "text-highlight" : "text-text-muted"
-            }`}
-          >
-            {msg.time}
-          </span>
-        </div>
-      </div>
+        ))}
     </div>
   );
 };

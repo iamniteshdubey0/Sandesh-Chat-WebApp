@@ -1,5 +1,6 @@
 import React from "react";
 import { Paperclip, Phone, Plus, Video, X } from "lucide-react";
+import useMobileStore from "../../store/useMobileStore";
 
 const chatsMock = [
   {
@@ -54,9 +55,11 @@ const chatsMock = [
 ];
 
 const ChatSettings = ({ showSettings, onToggleSettings }) => {
+  const { handleToggleSettings: storeHandleToggleSettings } = useMobileStore();
+  
   return (
     <div className="md:max-w-xs w-full bg-bg border-1 border-border shadow-xl p-4 flex flex-col sm:h-[95vh] md:h-[88vh] md:mx-auto rounded-md">
-      <button onClick={onToggleSettings} className="md:hidden flex justify-end py-2 mb-4"><X size={20} className="text-text-muted" /></button>
+      <button onClick={onToggleSettings || storeHandleToggleSettings} className="md:hidden flex justify-end py-2 mb-4"><X size={20} className="text-text-muted" /></button>
       <div className="flex flex-col items-center justify-center bg-bg-light px-3 py-2 rounded-lg border gap-4">
         <div className="flex flex-col items-center justify-center text-center space-y-2 focus:outline-none cursor-pointer">
           <img

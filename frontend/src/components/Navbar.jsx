@@ -7,7 +7,7 @@ const Navbar = () => {
   const { logout, authUser } = useAuthStore();
 
   return (
-    <nav className="fixed w-full z-40 transition-all duration-300 py-2 bg-bg backdrop-blur-md shadow-xs z-50">
+    <nav className="fixed top-0 w-full transition-all duration-300 py-2 bg-bg backdrop-blur-md shadow-xs z-50">
       <div className="flex items-center justify-between px-4 py-2 md:py-1">
         {/* left: Logo and Brand Name */}
         <Link
@@ -21,7 +21,7 @@ const Navbar = () => {
         </Link>
 
         {/* Right: setting, profile & logout */}
-        <div className="flex items-center space-x-2">
+        <div className="hidden md:flex items-center space-x-2">
           <Link
             to={"/settings"}
             className="flex items-center justify-center space-x-1  text-text/70 cursor-pointer border-1 border-bg hover:bg-bg-light hover:border-border py-1 px-2 rounded-md"

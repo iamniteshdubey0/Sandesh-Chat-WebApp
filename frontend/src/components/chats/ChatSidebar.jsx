@@ -3,11 +3,13 @@ import { Plus, User } from "lucide-react";
 import { useChatStore } from "../../store/useChatStore";
 import ChatSidebarSkeleton from "../skeletons/ChatSidebarSkeleton";
 import { useAuthStore } from "../../store/useAuthStore";
+import useMobileStore from "../../store/useMobileStore";
 
 
 const ChatSidebar = ({ onOpenChat }) => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
   const { onlineUsers } = useAuthStore();
+  const { handleOpenChat } = useMobileStore();
 
   useEffect(() => {
     getUsers();
@@ -35,7 +37,15 @@ const ChatSidebar = ({ onOpenChat }) => {
           users.map((user) => (
             <div
               key={user._id}
-              onClick={() => setSelectedUser(user)}
+              onClick={() => {
+                setSelectedUser(user);
+                // Use the prop if provided, otherwise use the store function
+                if (onOpenChat) {
+                  onOpenChat();
+                } else {
+                  handleOpenChat();
+                }
+              }}
               className={`relative
               flex items-center px-1 py-3 rounded-lg cursor-pointer 
               ${

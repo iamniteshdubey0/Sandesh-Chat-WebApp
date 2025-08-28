@@ -69,32 +69,33 @@ const MessageInput = () => {
         </div>
       )}
 
-      <form className="flex items-center gap-3 transition-all duration-300">
-        <input
-          type="text"
-          value={text}
-          className="flex-1 text-text-muted rounded-md bg-bg-dark focus:outline-none transition-all duration-300 text-sm p-3"
-          placeholder="Type a message"
-          onChange={(e) => setText(e.target.value)}
-        />
+      <form onSubmit={handleSendMessage} className="flex items-center gap-3 transition-all duration-300">
+        <>
+          <input
+            type="text"
+            value={text}
+            className="flex-1 text-text-muted rounded-md bg-bg-dark focus:outline-none transition-all duration-300 text-sm p-3"
+            placeholder="Type a message"
+            onChange={(e) => setText(e.target.value)}
+          />
 
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          ref={fileInputRef}
-          onChange={handleImageChange}
-        />
-        <button
-          type="button"
-          className={`hidden sm:flex cursor-pointer hover:scale-105 transition-all duration-200 ${
-            imagePreview ? "text-success" : "text-text/50"
-          }`}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          <Image size={20} />
-        </button>
-
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
+          <button
+            type="button"
+            className={`hidden sm:flex cursor-pointer hover:scale-105 transition-all duration-200 ${
+              imagePreview ? "text-success" : "text-text/50"
+            }`}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Image size={20} />
+          </button>
+        </>
         <button
           type="submit"
           className="p-2 bg-highlight/30 rounded-md hover:bg-highlight transition cursor-pointer"
