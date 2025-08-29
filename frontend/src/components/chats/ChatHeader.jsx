@@ -15,7 +15,7 @@ const ChatHeader = ({onBackToSidebar, onToggleSettings}) => {
         {onBackToSidebar && (
           <button
             onClick={onBackToSidebar}
-            className="mr-3 p-1 rounded-full hover:bg-highlight/20 transition-colors"
+            className="md:hidden mr-3 p-1 rounded-full hover:bg-highlight/20 transition-colors"
           >
             <ArrowLeft className="text-text-muted text-lg" />
           </button>
