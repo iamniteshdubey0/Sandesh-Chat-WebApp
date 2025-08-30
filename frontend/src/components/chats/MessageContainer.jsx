@@ -1,4 +1,3 @@
-import { Paperclip } from "lucide-react";
 import { useChatStore } from "../../store/useChatStore";
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
@@ -6,15 +5,25 @@ import MessageSkeleton from "../skeletons/MessageSkeleton";
 import { formatMessageTime } from "../../lib/util";
 
 const MessageContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
-    useChatStore();
+  const {
+    messages,
+    getMessages,
+    isMessagesLoading,
+    selectedUser,
+    subscribeToMessage,
+    unsubscribeFromMessage,
+  } = useChatStore();
 
   const { authUser } = useAuthStore();
 
   useEffect(() => {
     if (!selectedUser || !selectedUser._id) return;
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages]);
+
+    subscribeToMessage();
+
+    return () => unsubscribeFromMessage();
+  }, [selectedUser._id]);
 
   // Show loading skeleton if messages are loading
   if (isMessagesLoading) {
