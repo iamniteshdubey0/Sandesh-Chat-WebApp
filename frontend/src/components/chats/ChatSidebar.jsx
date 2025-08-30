@@ -57,7 +57,7 @@ const ChatSidebar = ({ onOpenChat }) => {
             `}
             >
               <img
-                src={user.profilePic}
+                src={user.profilePic || "/vite.svg"}
                 alt={user.fullName}
                 className="w-9 h-9 rounded-full object-cover mr-3 border"
               />

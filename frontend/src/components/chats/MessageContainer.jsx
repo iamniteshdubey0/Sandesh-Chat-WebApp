@@ -1,5 +1,5 @@
 import { useChatStore } from "../../store/useChatStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 import { formatMessageTime } from "../../lib/util";
@@ -15,6 +15,7 @@ const MessageContainer = () => {
   } = useChatStore();
 
   const { authUser } = useAuthStore();
+  const messageRef = useRef(null);
 
   useEffect(() => {
     if (!selectedUser || !selectedUser._id) return;
@@ -24,6 +25,12 @@ const MessageContainer = () => {
 
     return () => unsubscribeFromMessage();
   }, [selectedUser._id]);
+
+  useEffect(() => {
+    if (messageRef.current && messages) {
+      messageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   // Show loading skeleton if messages are loading
   if (isMessagesLoading) {
@@ -50,6 +57,7 @@ const MessageContainer = () => {
                 ? "justify-end"
                 : "justify-start"
             } w-full`}
+            ref={messageRef}
           >
             <img
               src={

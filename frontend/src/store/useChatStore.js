@@ -59,7 +59,7 @@ export const useChatStore = create((set, get) => ({
 
     socket.on("newMessage", (newMessage) => {
       const currentMessages = get().messages;
-      const currentSelectedUser = get().selectedUser;
+      const currentSelectedUser = get().selectedUser; 
       
       // Only add the message if:
       // 1. It's not from the current user (to avoid duplicates from local state)
